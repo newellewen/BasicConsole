@@ -15,6 +15,71 @@ namespace BasicConsole.Service
         public BasicConsoleService(IOptions<BasicConsoleOptions> basicConsoleOptions)
         {
             _basicConsoleOptions = basicConsoleOptions.Value;
+            Variables = new List<BasicConsoleModel>();
+        }
+
+        public void Run()
+        {
+            foreach (var command in _basicConsoleOptions.Commands)
+            {
+                var instructions = command.Split(" ");
+                var operation = instructions[0];
+                var variableName = instructions[1];
+
+                //With more time I would use reflection to reference specific methods/arguments but ran out of time
+                switch (operation.ToLower())
+                {
+                    //Would also add much better error handling/logging/etc.
+                    case "int":
+                        AddNewVariable(variableName);
+                        break;
+                    case "set":
+                        var variableValue = int.Parse(instructions[2]);
+                        SetVariableValue(variableName, variableValue);
+                        break;
+                    case "add":
+
+                        int addValue;
+                        int.TryParse(instructions[2], out addValue);
+
+                        if (addValue == null)
+                        {
+                            var secondVariableName = instructions[2];
+                            Add(variableName, secondVariableName);
+                        }
+                        else
+                        {
+                            Add(variableName, addValue);
+                        }
+
+                        break;
+                    case "sub":
+
+                        int subtractValue;
+                        int.TryParse(instructions[2], out subtractValue);
+
+                        if (subtractValue == null)
+                        {
+                            var secondVariableName = instructions[2];
+                            Subtract(variableName, secondVariableName);
+                        }
+                        else
+                        {
+                            Subtract(variableName, subtractValue);
+                        }
+
+                        break;
+                    case "print":
+                        PrintVariable(variableName);
+                        break;
+                    default:
+                        Console.WriteLine($"{operation} is not a valid command.");
+                        break;
+                }
+
+
+
+            }
         }
 
         public void AddNewVariable(string name)

@@ -8,6 +8,7 @@ namespace BasicConsole.Service
 {
     interface IBasicConsoleService
     {
+        void Run();
         void AddNewVariable(string name);
         void SetVariableValue(string name, int value);
         void Add(string varName1, string varName2);
