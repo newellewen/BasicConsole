@@ -38,36 +38,26 @@ namespace BasicConsole.Service
                         SetVariableValue(variableName, variableValue);
                         break;
                     case "add":
-
-                        int addValue;
-                        int.TryParse(instructions[2], out addValue);
-
-                        if (addValue == null)
+                        if (int.TryParse(instructions[2], out var addValue))
+                        {
+                            Add(variableName, addValue);
+                        }
+                        else
                         {
                             var secondVariableName = instructions[2];
                             Add(variableName, secondVariableName);
                         }
-                        else
-                        {
-                            Add(variableName, addValue);
-                        }
-
                         break;
                     case "sub":
-
-                        int subtractValue;
-                        int.TryParse(instructions[2], out subtractValue);
-
-                        if (subtractValue == null)
+                        if (int.TryParse(instructions[2], out var subtractValue))
+                        {
+                            Subtract(variableName, subtractValue);
+                        }
+                        else
                         {
                             var secondVariableName = instructions[2];
                             Subtract(variableName, secondVariableName);
                         }
-                        else
-                        {
-                            Subtract(variableName, subtractValue);
-                        }
-
                         break;
                     case "print":
                         PrintVariable(variableName);
